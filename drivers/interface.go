@@ -5,7 +5,7 @@ package drivers
 import (
 	"sort"
 
-	"github.com/pkg/errors"
+	"github.com/friendsofgo/errors"
 	"github.com/thrasher-corp/sqlboiler/importers"
 	"github.com/thrasher-corp/sqlboiler/strmangle"
 )

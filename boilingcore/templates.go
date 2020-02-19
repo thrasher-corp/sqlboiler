@@ -11,7 +11,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/pkg/errors"
+	"github.com/friendsofgo/errors"
 	"github.com/thrasher-corp/sqlboiler/drivers"
 	"github.com/thrasher-corp/sqlboiler/strmangle"
 	"github.com/thrasher-corp/sqlboiler/templatebin"
@@ -37,12 +37,13 @@ type templateData struct {
 	RQ string
 
 	// Control various generation features
-	AddGlobal        bool
-	AddPanic         bool
-	NoContext        bool
-	NoHooks          bool
-	NoAutoTimestamps bool
-	NoRowsAffected   bool
+	AddGlobal         bool
+	AddPanic          bool
+	NoContext         bool
+	NoHooks           bool
+	NoAutoTimestamps  bool
+	NoRowsAffected    bool
+	NoDriverTemplates bool
 
 	// Tags control which tags are added to the struct
 	Tags []string
@@ -250,7 +251,7 @@ var templateFunctions = template.FuncMap{
 	// String ops
 	"quoteWrap": func(s string) string { return fmt.Sprintf(`"%s"`, s) },
 	"id":        strmangle.Identifier,
-	"goVarname": func(s string) string { return goVarnameReplacer.Replace(s) },
+	"goVarname": goVarnameReplacer.Replace,
 
 	// Pluralization
 	"singular": strmangle.Singular,
@@ -288,7 +289,7 @@ var templateFunctions = template.FuncMap{
 	"whereClause": strmangle.WhereClause,
 
 	// Alias and text helping
-	"aliasCols":      func(ta TableAlias) func(string) string { return func(s string) string { return ta.Column(s) } },
+	"aliasCols":      func(ta TableAlias) func(string) string { return ta.Column },
 	"usesPrimitives": usesPrimitives,
 	"isPrimitive":    isPrimitive,
 

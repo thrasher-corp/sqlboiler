@@ -9,10 +9,10 @@ import (
 
 	// Side effect import go-mssqldb
 	_ "github.com/denisenkom/go-mssqldb"
-	"github.com/pkg/errors"
+	"github.com/friendsofgo/errors"
 	"github.com/thrasher-corp/sqlboiler/drivers"
-	"github.com/thrasher-corp/sqlboiler/importers"
 	"github.com/thrasher-corp/sqlboiler/strmangle"
+	"github.com/thrasher-corp/sqlboiler/importers"
 )
 
 func init() {
@@ -486,7 +486,7 @@ func (MSSQLDriver) Imports() (col importers.Collection, err error) {
 			},
 			ThirdParty: importers.List{
 				`"github.com/kat-co/vala"`,
-				`"github.com/pkg/errors"`,
+				`"github.com/friendsofgo/errors"`,
 				`"github.com/spf13/viper"`,
 				`"github.com/thrasher-corp/sqlboiler/drivers/sqlboiler-mssql/driver"`,
 				`"github.com/thrasher-corp/sqlboiler/randomize"`,

@@ -9,7 +9,7 @@ import (
 
 	"github.com/spf13/cast"
 
-	"github.com/pkg/errors"
+	"github.com/friendsofgo/errors"
 	"github.com/thrasher-corp/sqlboiler/strmangle"
 )
 
@@ -201,11 +201,11 @@ func NewDefaultImports() Collection {
 			`"time"`,
 		},
 		ThirdParty: List{
-			`"github.com/pkg/errors"`,
+			`"github.com/friendsofgo/errors"`,
 			`"github.com/thrasher-corp/sqlboiler/boil"`,
 			`"github.com/thrasher-corp/sqlboiler/queries"`,
-			`"github.com/thrasher-corp/sqlboiler/queries/qm"`,
 			`"github.com/thrasher-corp/sqlboiler/queries/qmhelper"`,
+			`"github.com/thrasher-corp/sqlboiler/queries/qm"`,
 			`"github.com/thrasher-corp/sqlboiler/strmangle"`,
 		},
 	}
@@ -223,7 +223,7 @@ func NewDefaultImports() Collection {
 				`"strconv"`,
 			},
 			ThirdParty: List{
-				`"github.com/pkg/errors"`,
+				`"github.com/friendsofgo/errors"`,
 				`"github.com/thrasher-corp/sqlboiler/boil"`,
 				`"github.com/thrasher-corp/sqlboiler/strmangle"`,
 			},

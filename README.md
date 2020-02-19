@@ -323,6 +323,7 @@ not to pass them through the command line or environment variables:
 | no-tests            | false     |
 | no-auto-timestamps  | false     |
 | no-rows-affected    | false     |
+| no-driver-templates | false     |
 
 Example:
 
@@ -1039,6 +1040,7 @@ InnerJoin("pilots p on jets.pilot_id=?", 10)
 InnerJoin(models.TableNames.Pilots + " p on " + models.TableNames.Jets + "." + models.JetColumns.PilotID + "=?", 10)
 
 GroupBy("name")
+GroupBy("name like ? DESC, name", "John")
 GroupBy(models.PilotColumns.Name)
 OrderBy("age, height")
 OrderBy(models.PilotColumns.Age, models.PilotColumns.Height)

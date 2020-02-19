@@ -11,11 +11,11 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/pkg/errors"
+	"github.com/friendsofgo/errors"
 	"github.com/thrasher-corp/sqlboiler/drivers"
 	"github.com/thrasher-corp/sqlboiler/importers"
-	"github.com/thrasher-corp/sqlboiler/strmangle"
 	"github.com/thrasher-corp/sqlboiler/templatebin"
+	"github.com/thrasher-corp/sqlboiler/strmangle"
 )
 
 const (
@@ -133,23 +133,24 @@ func New(config *Config) (*State, error) {
 // state given.
 func (s *State) Run() error {
 	data := &templateData{
-		Tables:           s.Tables,
-		Aliases:          s.Config.Aliases,
-		DriverName:       s.Config.DriverName,
-		PkgName:          s.Config.PkgName,
-		AddGlobal:        s.Config.AddGlobal,
-		AddPanic:         s.Config.AddPanic,
-		NoContext:        s.Config.NoContext,
-		NoHooks:          s.Config.NoHooks,
-		NoAutoTimestamps: s.Config.NoAutoTimestamps,
-		NoRowsAffected:   s.Config.NoRowsAffected,
-		StructTagCasing:  s.Config.StructTagCasing,
-		Tags:             s.Config.Tags,
-		Dialect:          s.Dialect,
-		Schema:           s.Schema,
-		LQ:               strmangle.QuoteCharacter(s.Dialect.LQ),
-		RQ:               strmangle.QuoteCharacter(s.Dialect.RQ),
-		OutputDirDepth:   s.Config.OutputDirDepth(),
+		Tables:            s.Tables,
+		Aliases:           s.Config.Aliases,
+		DriverName:        s.Config.DriverName,
+		PkgName:           s.Config.PkgName,
+		AddGlobal:         s.Config.AddGlobal,
+		AddPanic:          s.Config.AddPanic,
+		NoContext:         s.Config.NoContext,
+		NoHooks:           s.Config.NoHooks,
+		NoAutoTimestamps:  s.Config.NoAutoTimestamps,
+		NoRowsAffected:    s.Config.NoRowsAffected,
+		NoDriverTemplates: s.Config.NoDriverTemplates,
+		StructTagCasing:   s.Config.StructTagCasing,
+		Tags:              s.Config.Tags,
+		Dialect:           s.Dialect,
+		Schema:            s.Schema,
+		LQ:                strmangle.QuoteCharacter(s.Dialect.LQ),
+		RQ:                strmangle.QuoteCharacter(s.Dialect.RQ),
+		OutputDirDepth:    s.Config.OutputDirDepth(),
 
 		DBTypes:     make(once),
 		StringFuncs: templateStringMappers,
@@ -238,13 +239,15 @@ func (s *State) initTemplates() ([]lazyTemplate, error) {
 		}
 	}
 
-	driverTemplates, err := s.Driver.Templates()
-	if err != nil {
-		return nil, err
-	}
+	if !s.Config.NoDriverTemplates {
+		driverTemplates, err := s.Driver.Templates()
+		if err != nil {
+			return nil, err
+		}
 
-	for template, contents := range driverTemplates {
-		templates[normalizeSlashes(template)] = base64Loader(contents)
+		for template, contents := range driverTemplates {
+			templates[normalizeSlashes(template)] = base64Loader(contents)
+		}
 	}
 
 	for _, replace := range s.Config.Replacements {
@@ -589,13 +592,13 @@ func mergeTemplates(dst, src map[string]templateLoader) {
 // normalizeSlashes takes a path that was made on linux or windows and converts it
 // to a native path.
 func normalizeSlashes(path string) string {
-	path = strings.Replace(path, `/`, string(os.PathSeparator), -1)
-	path = strings.Replace(path, `\`, string(os.PathSeparator), -1)
+	path = strings.ReplaceAll(path, `/`, string(os.PathSeparator))
+	path = strings.ReplaceAll(path, `\`, string(os.PathSeparator))
 	return path
 }
 
 // denormalizeSlashes takes any backslashes and converts them to linux style slashes
 func denormalizeSlashes(path string) string {
-	path = strings.Replace(path, `\`, `/`, -1)
+	path = strings.ReplaceAll(path, `\`, `/`)
 	return path
 }

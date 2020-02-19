@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/go-sql-driver/mysql"
-	"github.com/pkg/errors"
+	"github.com/friendsofgo/errors"
 	"github.com/thrasher-corp/sqlboiler/drivers"
 	"github.com/thrasher-corp/sqlboiler/importers"
 )
@@ -500,7 +500,7 @@ func (MySQLDriver) Imports() (col importers.Collection, err error) {
 			},
 			ThirdParty: importers.List{
 				`"github.com/kat-co/vala"`,
-				`"github.com/pkg/errors"`,
+				`"github.com/friendsofgo/errors"`,
 				`"github.com/spf13/viper"`,
 				`"github.com/thrasher-corp/sqlboiler/drivers/sqlboiler-mysql/driver"`,
 				`"github.com/thrasher-corp/sqlboiler/randomize"`,

@@ -12,7 +12,7 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/pkg/errors"
+	"github.com/friendsofgo/errors"
 	"github.com/thrasher-corp/sqlboiler/boil"
 	"github.com/thrasher-corp/sqlboiler/strmangle"
 )
